@@ -1,0 +1,14 @@
+name: shipment-scheduler
+description: Process pending shipments and generate manifests
+schedule: 0 14 * * *  # Every day at 2 PM
+timeZone: America/New_York
+httpTarget:
+  uri: https://YOUR_REGION-YOUR_PROJECT_ID.cloudfunctions.net/processShipments
+  httpMethod: POST
+  headers:
+    Content-Type: application/json
+retryConfig:
+  retryCount: 3
+  maxRetryDuration: 3600s
+  minBackoffDuration: 5s
+  maxBackoffDuration: 3600s

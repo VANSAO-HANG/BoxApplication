@@ -1,0 +1,15 @@
+name: shipment-events
+labels:
+  environment: production
+  service: subscription-box
+
+topic:
+  name: projects/YOUR_PROJECT_ID/topics/shipment-events
+  
+messageRetentionDuration: 604800s  # 7 days
+
+# Messages published to this topic:
+# - shipment.created
+# - shipment.shipped
+# - shipment.delivered
+# - shipment.failed

@@ -1,0 +1,15 @@
+name: payment-events
+labels:
+  environment: production
+  service: subscription-box
+
+topic:
+  name: projects/YOUR_PROJECT_ID/topics/payment-events
+  
+messageRetentionDuration: 604800s  # 7 days
+
+# Messages published to this topic:
+# - payment.succeeded
+# - payment.failed
+# - payment.refunded
+# - recurring_payment.setup

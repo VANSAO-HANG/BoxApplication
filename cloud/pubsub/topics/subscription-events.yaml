@@ -1,0 +1,15 @@
+name: subscription-events
+labels:
+  environment: production
+  service: subscription-box
+
+topic:
+  name: projects/YOUR_PROJECT_ID/topics/subscription-events
+  
+messageRetentionDuration: 604800s  # 7 days
+
+# Messages published to this topic:
+# - subscription.created
+# - subscription.updated
+# - subscription.cancelled
+# - subscription.renewed

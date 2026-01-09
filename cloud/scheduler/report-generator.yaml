@@ -1,0 +1,14 @@
+name: report-generator
+description: Generate daily analytics and reports
+schedule: 0 1 * * *  # Every day at 1 AM
+timeZone: America/New_York
+httpTarget:
+  uri: https://YOUR_REGION-YOUR_PROJECT_ID.cloudfunctions.net/generateDailyReports
+  httpMethod: POST
+  headers:
+    Content-Type: application/json
+retryConfig:
+  retryCount: 2
+  maxRetryDuration: 1800s
+  minBackoffDuration: 5s
+  maxBackoffDuration: 300s

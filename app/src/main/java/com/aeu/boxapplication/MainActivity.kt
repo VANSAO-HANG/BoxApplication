@@ -12,6 +12,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.aeu.boxapplication.ui.theme.BoxApplicationTheme
+import com.aeu.boxapplication.presentation.onboarding.WelcomeScreen
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -19,12 +20,14 @@ class MainActivity : ComponentActivity() {
         enableEdgeToEdge()
         setContent {
             BoxApplicationTheme {
-                Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
-                }
+                WelcomeScreen(
+                    onStartExploring = {
+                        // Navigate to main app or registration
+                    },
+                    onLoginClick = {
+                        // Navigate to login screen
+                    }
+                )
             }
         }
     }

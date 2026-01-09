@@ -1,0 +1,54 @@
+rules_version = '2';
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    function isOwner(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function isValidImageType() {
+      return request.resource.contentType.matches('image/.*');
+    }
+    
+    function isValidFileSize(maxSizeMB) {
+      return request.resource.size < maxSizeMB * 1024 * 1024;
+    }
+    
+    // User profile images
+    match /users/{userId}/profile/{imageId} {
+      allow read: if true;
+      allow write: if isOwner(userId) && 
+                      isValidImageType() && 
+                      isValidFileSize(5);
+    }
+    
+    // Product images
+    match /products/{productId}/{imageId} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isValidImageType() && isValidFileSize(10);
+    }
+    
+    // Subscription plan images
+    match /plans/{planId}/{imageId} {
+      allow read: if true;
+      allow write: if isAuthenticated() && isValidImageType() && isValidFileSize(5);
+    }
+    
+    // Shipment manifests
+    match /shipments/{shipmentId}/manifest.pdf {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated();
+    }
+    
+    // Reports and exports
+    match /reports/{userId}/{reportId} {
+      allow read: if isOwner(userId);
+      allow write: if isOwner(userId);
+    }
+  }
+}
